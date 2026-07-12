@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import TestPapers from './pages/TestPapers';
 import SavedFiles from './pages/SavedFiles';
+import Profile from './pages/Profile';
 import Admin from './pages/Admin';
 import AIChat from './components/AIChat';
 import PDFViewerModal from './components/PDFViewerModal';
@@ -15,6 +16,28 @@ import { useThemeStore } from './lib/store';
 import { Sun, Moon, Lock, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
+
+function AnimatedRoutes({ user, isAdmin }: { user: User | null; isAdmin: boolean }) {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
+        
+        {/* Protected Routes */}
+        <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path="/tests" element={user ? <TestPapers /> : <Navigate to="/login" />} />
+        <Route path="/saved" element={user ? <SavedFiles /> : <Navigate to="/login" />} />
+        <Route path="/ai-chat" element={user ? <AIChat /> : <Navigate to="/login" />} />
+        <Route path="/profile" element={user ? <Profile /> : <Navigate to="/login" />} />
+        
+        {/* Admin Route - Only accessible by specific email */}
+        <Route path="/admin" element={user && isAdmin ? <Admin /> : <Navigate to="/" />} />
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -86,22 +109,11 @@ export default function App() {
       {user && <Navigation isAdmin={isAdmin} />}
       
       <div className={user ? "pb-24 pt-4 md:pt-0 md:pl-64 md:pb-0 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col" : "min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col"}>
-        <div className="flex-1">
-          <Routes>
-            <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
-            
-            {/* Protected Routes */}
-            <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-            <Route path="/tests" element={user ? <TestPapers /> : <Navigate to="/login" />} />
-            <Route path="/saved" element={user ? <SavedFiles /> : <Navigate to="/login" />} />
-            
-            {/* Admin Route - Only accessible by specific email */}
-            <Route path="/admin" element={user && isAdmin ? <Admin /> : <Navigate to="/" />} />
-          </Routes>
+        <div className="flex-1 relative">
+          <AnimatedRoutes user={user} isAdmin={isAdmin} />
         </div>
       </div>
 
-      {user && <AIChat />}
       <PDFViewerModal />
       <Toaster position="bottom-center" />
     </BrowserRouter>

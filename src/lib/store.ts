@@ -23,13 +23,6 @@ interface ThemeState {
   toggleTheme: () => void;
 }
 
-interface AIChatState {
-  isChatOpen: boolean;
-  toggleChat: () => void;
-  openChat: () => void;
-  closeChat: () => void;
-}
-
 export const useThemeStore = create<ThemeState>((set) => ({
   isDark: false,
   toggleTheme: () => set((state) => {
@@ -42,11 +35,3 @@ export const useThemeStore = create<ThemeState>((set) => ({
     return { isDark: newDark };
   }),
 }));
-
-export const useAIChatStore = create<AIChatState>((set) => ({
-  isChatOpen: false,
-  toggleChat: () => set((state) => ({ isChatOpen: !state.isChatOpen })),
-  openChat: () => set({ isChatOpen: true }),
-  closeChat: () => set({ isChatOpen: false }),
-}));
-

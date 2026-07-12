@@ -183,9 +183,30 @@ export default function Admin() {
 
   const uniqueCategories: string[] = Array.from(new Set(categories));
 
+  const container = {
+    hidden: { opacity: 0, transition: { duration: 0.2 } },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemAnim = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="p-4 md:p-8 max-w-6xl mx-auto space-y-8">
-      <div className="flex items-center gap-3 mb-8">
+    <motion.div 
+      variants={container}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      className="p-4 md:p-8 max-w-6xl mx-auto space-y-8"
+    >
+      <motion.div variants={itemAnim} className="flex items-center gap-3 mb-8">
         <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-2xl flex items-center justify-center">
           <ShieldAlert className="w-6 h-6" />
         </div>
@@ -193,10 +214,10 @@ export default function Admin() {
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
           <p className="text-gray-500 dark:text-gray-400">Manage site settings, categories, and test papers</p>
         </div>
-      </div>
+      </motion.div>
 
       {/* Stats & Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <motion.div variants={itemAnim} className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Total Users</p>
@@ -231,9 +252,9 @@ export default function Admin() {
             {isLocked ? 'Site Locked (Unlock)' : 'Site Active (Lock Site)'}
           </button>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <motion.div variants={itemAnim} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
         {/* Left Column: Forms */}
         <div className="space-y-8 lg:col-span-1">
@@ -466,7 +487,7 @@ export default function Admin() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

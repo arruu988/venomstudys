@@ -49,15 +49,36 @@ export default function TestPapers() {
     });
   }, [tests, search, activeTab]);
 
+  const container = {
+    hidden: { opacity: 0, transition: { duration: 0.2 } },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="p-4 md:p-8 max-w-5xl mx-auto space-y-6">
-      <div className="mb-8">
+    <motion.div 
+      variants={container}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      className="p-4 md:p-8 max-w-5xl mx-auto space-y-6"
+    >
+      <motion.div variants={item} className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Test Papers</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">Browse and view all test materials</p>
-      </div>
+      </motion.div>
 
       {/* Search Bar */}
-      <div className="relative">
+      <motion.div variants={item} className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         <input
           type="text"
@@ -66,10 +87,10 @@ export default function TestPapers() {
           onChange={(e) => setSearch(e.target.value)}
           className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-900 outline-none transition-all shadow-sm text-gray-900 dark:text-white"
         />
-      </div>
+      </motion.div>
 
       {/* Dynamic Tabs */}
-      <div className="flex overflow-x-auto p-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm relative scrollbar-hide">
+      <motion.div variants={item} className="flex overflow-x-auto p-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm relative scrollbar-hide">
         {(Array.from(new Set(categories)) as string[]).map((cat, idx) => (
           <button
             key={`tab-${idx}-${cat}`}
@@ -83,10 +104,10 @@ export default function TestPapers() {
             {cat}
           </button>
         ))}
-      </div>
+      </motion.div>
 
       {/* Test List */}
-      <div className="bg-white dark:bg-gray-800 rounded-3xl p-4 md:p-6 shadow-sm border border-gray-100 dark:border-gray-700 min-h-[400px]">
+      <motion.div variants={item} className="bg-white dark:bg-gray-800 rounded-3xl p-4 md:p-6 shadow-sm border border-gray-100 dark:border-gray-700 min-h-[400px]">
         {loading ? (
           <div className="flex items-center justify-center h-48 text-gray-400">Loading...</div>
         ) : (
@@ -129,7 +150,7 @@ export default function TestPapers() {
             )}
           </AnimatePresence>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

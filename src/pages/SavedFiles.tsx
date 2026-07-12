@@ -48,14 +48,35 @@ export default function SavedFiles() {
     fetchHistory();
   };
 
+  const container = {
+    hidden: { opacity: 0, transition: { duration: 0.2 } },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemAnim = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="p-4 md:p-8 max-w-5xl mx-auto space-y-6">
-      <div className="mb-8">
+    <motion.div 
+      variants={container}
+      initial="hidden"
+      animate="show"
+      exit="hidden"
+      className="p-4 md:p-8 max-w-5xl mx-auto space-y-6"
+    >
+      <motion.div variants={itemAnim} className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Saved & Recent Files</h1>
         <p className="text-gray-500 mt-1">Your recently viewed test papers</p>
-      </div>
+      </motion.div>
 
-      <div className="bg-white rounded-3xl p-4 md:p-6 shadow-sm border border-gray-100 min-h-[400px]">
+      <motion.div variants={itemAnim} className="bg-white rounded-3xl p-4 md:p-6 shadow-sm border border-gray-100 min-h-[400px]">
         {loading ? (
           <div className="flex items-center justify-center h-48 text-gray-400">Loading...</div>
         ) : (
@@ -107,7 +128,7 @@ export default function SavedFiles() {
             )}
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

@@ -42,32 +42,50 @@ export default function Login() {
     }
   };
 
+  const container = {
+    hidden: { opacity: 0, y: 20, transition: { duration: 0.2 } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 p-4 transition-colors">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        variants={container}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
         className="w-full max-w-md bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700"
       >
-        <div className="flex justify-center mb-6">
+        <motion.div variants={item} className="flex justify-center mb-6">
           <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center rotate-3">
             <BookOpen className="w-8 h-8 text-white -rotate-3" />
           </div>
-        </div>
-        <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-2">
+        </motion.div>
+        <motion.h2 variants={item} className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-2">
           NEET Breakers Archive
-        </h2>
-        <p className="text-center text-gray-500 dark:text-gray-400 mb-8">
+        </motion.h2>
+        <motion.p variants={item} className="text-center text-gray-500 dark:text-gray-400 mb-8">
           {isLogin ? 'Welcome back! Please login.' : 'Create your account to continue.'}
-        </p>
+        </motion.p>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded-xl text-center">
+          <motion.div variants={item} className="mb-4 p-3 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded-xl text-center">
             {error}
-          </div>
+          </motion.div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <motion.form variants={item} onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
@@ -112,16 +130,16 @@ export default function Login() {
           >
             {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
           </motion.button>
-        </form>
+        </motion.form>
 
-        <div className="mt-6 text-center">
+        <motion.div variants={item} className="mt-6 text-center">
           <button
             onClick={() => setIsLogin(!isLogin)}
             className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
           >
             {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
           </button>
-        </div>
+        </motion.div>
       </motion.div>
     </div>
   );

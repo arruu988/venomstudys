@@ -81,9 +81,10 @@ export default function PDFViewerModal() {
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.98 }}
+        transition={{ type: "spring", duration: 0.5, bounce: 0 }}
         className="fixed inset-0 z-50 flex flex-col bg-gray-900/95 backdrop-blur-sm"
       >
         {/* Header toolbar */}

@@ -1,20 +1,20 @@
 import { NavLink } from 'react-router-dom';
-import { Home, FileText, Download, ShieldAlert, LogOut, Bot } from 'lucide-react';
+import { Home, FileText, Download, ShieldAlert, LogOut, Bot, User } from 'lucide-react';
 import { auth } from '../lib/firebase';
 import { signOut } from 'firebase/auth';
 import { motion } from 'motion/react';
-import { useAIChatStore } from '../lib/store';
 
 export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
   const handleLogout = () => {
     signOut(auth);
   };
-  const { toggleChat, isChatOpen } = useAIChatStore();
 
   const navItems = [
     { to: "/", icon: Home, label: "Home" },
     { to: "/tests", icon: FileText, label: "Test Papers" },
     { to: "/saved", icon: Download, label: "Saved Files" },
+    { to: "/ai-chat", icon: Bot, label: "Neet Breaker AI" },
+    { to: "/profile", icon: User, label: "Profile" },
   ];
 
   if (isAdmin) {
@@ -49,15 +49,6 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
             )}
           </NavLink>
         ))}
-        <button
-          onClick={toggleChat}
-          className={`flex flex-col items-center p-2 rounded-xl transition-colors ${
-            isChatOpen ? 'text-purple-600 dark:text-purple-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-          }`}
-        >
-          <Bot className="w-6 h-6 mb-1" strokeWidth={isChatOpen ? 2.5 : 2} />
-          <span className="text-[10px] font-medium">Neet Breakers AI</span>
-        </button>
       </nav>
 
       {/* Desktop Sidebar */}
@@ -91,21 +82,6 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
               )}
             </NavLink>
           ))}
-          <button
-            onClick={toggleChat}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors relative ${
-              isChatOpen ? 'text-purple-700 dark:text-purple-400 bg-purple-50/50 dark:bg-purple-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50'
-            }`}
-          >
-            <Bot className="w-5 h-5" strokeWidth={isChatOpen ? 2.5 : 2} />
-            <span className="font-medium">Neet Breakers AI</span>
-            {isChatOpen && (
-              <motion.div
-                layoutId="desktop-indicator-ai"
-                className="absolute left-0 top-2 bottom-2 w-1 bg-purple-600 dark:bg-purple-400 rounded-r-full"
-              />
-            )}
-          </button>
         </nav>
         <div className="p-4 border-t border-gray-100 dark:border-gray-800">
           <button
