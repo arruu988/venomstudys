@@ -83,14 +83,14 @@ export default function Profile() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-8"
     >
       <motion.div variants={itemAnim}>
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Profile</h1>
+        <h1 className="text-3xl font-bold text-gradient-brand tracking-tight">Profile</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your account settings and view activity.</p>
       </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <motion.div variants={itemAnim} className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-brand-purple/20 dark:bg-brand-purple/30 text-brand-purple dark:text-brand-purple-light rounded-xl flex items-center justify-center">
               <User className="w-5 h-5" />
             </div>
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">Account Info</h2>
@@ -103,7 +103,7 @@ export default function Profile() {
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-brand-purple outline-none transition-all"
                 placeholder="Your Name"
               />
             </div>
@@ -119,7 +119,7 @@ export default function Profile() {
             <button
               type="submit"
               disabled={loading || !displayName.trim() || displayName === auth.currentUser?.displayName}
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-sm hover:opacity-90 transition-opacity disabled:opacity-70 mt-4"
+              className="px-6 py-3 bg-gradient-brand text-white rounded-xl font-semibold shadow-sm hover:opacity-90 transition-opacity disabled:opacity-70 mt-4"
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>
@@ -138,9 +138,9 @@ export default function Profile() {
             {historyLoading ? (
               <div className="text-center py-4 text-gray-500 dark:text-gray-400">Loading activity...</div>
             ) : history.length > 0 ? (
-              history.map((item, idx) => (
+              history.map((item) => (
                 <div 
-                  key={`history-${idx}-${item.id}`}
+                  key={item.id}
                   onClick={() => openViewer(item.testDetails.driveLink, item.testDetails.title, item.testDetails.id)}
                   className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors"
                 >

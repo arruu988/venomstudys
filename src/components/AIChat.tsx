@@ -94,14 +94,14 @@ export default function AIChat() {
       className="flex flex-col h-[calc(100vh-5rem)] md:h-[calc(100vh-2rem)] bg-white dark:bg-gray-900 overflow-hidden border-t md:border border-gray-200 dark:border-gray-800 md:rounded-2xl md:mx-6 md:mt-4 shadow-sm relative"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-4 md:p-6 flex items-center justify-between text-white shadow-md z-10 shrink-0">
+      <div className="bg-gradient-brand p-4 md:p-6 flex items-center justify-between text-white shadow-md z-10 shrink-0">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
             <Bot className="w-7 h-7" />
           </div>
           <div>
             <h3 className="font-bold text-lg md:text-xl">Neet Breakers AI</h3>
-            <p className="text-sm text-blue-100">NEET Expert</p>
+            <p className="text-sm text-brand-purple-light">NEET Expert</p>
           </div>
         </div>
       </div>
@@ -117,13 +117,13 @@ export default function AIChat() {
               className={`flex gap-4 max-w-[90%] md:max-w-[75%] ${msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}
             >
               <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
-                msg.role === 'user' ? 'bg-blue-100 text-blue-600' : 'bg-indigo-100 text-indigo-600'
+                msg.role === 'user' ? 'bg-brand-purple/20 text-brand-purple' : 'bg-indigo-100 text-indigo-600'
               }`}>
                 {msg.role === 'user' ? <User className="w-5 h-5" /> : <Bot className="w-5 h-5" />}
               </div>
               <div className={`p-4 rounded-2xl text-base leading-relaxed ${
                 msg.role === 'user' 
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-tr-sm' 
+                  ? 'bg-gradient-brand text-white rounded-tr-sm' 
                   : 'bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-tl-sm shadow-sm'
               }`}>
                 {msg.content}
@@ -155,12 +155,12 @@ export default function AIChat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a NEET doubt..."
-            className="w-full pl-6 pr-16 py-4 md:py-5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:bg-white dark:focus:bg-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all outline-none text-base md:text-lg shadow-sm"
+            className="w-full pl-6 pr-16 py-4 md:py-5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-2xl focus:bg-white dark:focus:bg-gray-700 focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/30 transition-all outline-none text-base md:text-lg shadow-sm"
           />
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="absolute right-3 p-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:opacity-90 disabled:opacity-50 disabled:hover:opacity-100 transition-opacity"
+            className="absolute right-3 p-3 bg-gradient-brand text-white rounded-xl hover:opacity-90 disabled:opacity-50 disabled:hover:opacity-100 transition-opacity"
           >
             <Send className="w-5 h-5 md:w-6 md:h-6" />
           </button>

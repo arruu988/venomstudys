@@ -1,49 +1,35 @@
 @import "tailwindcss";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Neon Green (Primary) */
-  --color-blue-300: #66ffb8;
-  --color-blue-400: #33ff9d;
-  --color-blue-500: #00ff88;
-  --color-blue-600: #00e67a;
-  --color-blue-700: #00cc6a;
-  --color-blue-800: #00994f;
-  --color-blue-900: #006635;
-  
-  /* Deep Purple (Secondary) */
-  --color-indigo-400: #9333ff;
-  --color-indigo-500: #7000ff;
-  --color-indigo-600: #5b00cc;
-
-  /* Neon Pink (Accent) */
-  --color-purple-400: #ff33eb;
-  --color-purple-500: #ff00e5;
-  --color-purple-600: #cc00b7;
-
-  /* Cyberpunk Dark Mode Palette */
-  --color-gray-900: #050505;
-  --color-gray-850: #0f0f0f;
-  --color-gray-800: #0f0f0f;
-  --color-gray-750: #1a1a1a;
-  --color-gray-700: #222222;
+  --color-brand-purple: #5B0DC0;
+  --color-brand-purple-light: #8A2BE2;
+  --color-brand-purple-mid: #5E21D4;
+  --color-bg-gradient-start: #3A0B66;
+  --color-bg-gradient-mid: #1A0830;
+  --color-bg-gradient-end: #000000;
 }
 
 body {
-  @apply dark:bg-[#050505] dark:text-white;
+  @apply dark:text-gray-100 text-gray-900;
 }
 
-/* Override text color on primary buttons to ensure legibility on neon green */
-.dark .bg-blue-600, .bg-blue-600 {
-  color: #050505 !important;
+.dark body {
+  background: radial-gradient(circle, var(--color-bg-gradient-start) 0%, var(--color-bg-gradient-mid) 45%, var(--color-bg-gradient-end) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
 }
 
-.dark .text-blue-600 {
-  color: #00ff88 !important;
+.bg-gradient-brand {
+  background: linear-gradient(135deg, var(--color-brand-purple) 0%, var(--color-brand-purple-mid) 50%, var(--color-brand-purple-light) 100%);
 }
 
-/* specific fixes for gradients */
-.bg-gradient-to-r.from-blue-600.to-indigo-600 {
-  background: linear-gradient(to right, #00ff88, #7000ff, #ff00e5) !important;
-  color: #ffffff !important;
+.text-gradient-brand {
+  background: linear-gradient(135deg, var(--color-brand-purple) 0%, var(--color-brand-purple-mid) 50%, var(--color-brand-purple-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
+

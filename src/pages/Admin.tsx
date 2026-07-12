@@ -232,7 +232,7 @@ export default function Admin() {
           <ShieldAlert className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">Admin Dashboard</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gradient-brand">Admin Dashboard</h1>
           <p className="text-gray-500 dark:text-gray-400">Manage site settings, categories, and test papers</p>
         </div>
       </motion.div>
@@ -244,7 +244,7 @@ export default function Admin() {
             <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">Total Users</p>
             <p className="text-3xl font-bold text-gray-900 dark:text-white">{stats.totalUsers}</p>
           </div>
-          <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-brand-purple/10 dark:bg-brand-purple/20 text-brand-purple dark:text-brand-purple-light rounded-xl flex items-center justify-center">
             <Users className="w-6 h-6" />
           </div>
         </div>
@@ -289,7 +289,7 @@ export default function Admin() {
                 <textarea
                   value={broadcastMessage}
                   onChange={e => setBroadcastMessage(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none h-24"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none transition-all resize-none h-24"
                   placeholder="Enter an announcement for the dashboard..."
                 />
               </div>
@@ -302,7 +302,7 @@ export default function Admin() {
                     checked={broadcastActive}
                     onChange={e => setBroadcastActive(e.target.checked)}
                   />
-                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-brand-purple/30 dark:peer-focus:ring-brand-purple/40 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-brand-purple"></div>
                 </label>
               </div>
               <button
@@ -325,7 +325,7 @@ export default function Admin() {
                 placeholder="Message text..."
                 value={newAnnouncement.text}
                 onChange={e => setNewAnnouncement({...newAnnouncement, text: e.target.value})}
-                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none"
               />
               <div className="flex gap-2">
                 <input
@@ -333,29 +333,29 @@ export default function Admin() {
                   placeholder="Time (e.g. Today)"
                   value={newAnnouncement.time}
                   onChange={e => setNewAnnouncement({...newAnnouncement, time: e.target.value})}
-                  className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none"
                 />
                 <label className="flex items-center gap-2 px-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer">
                   <input
                     type="checkbox"
                     checked={newAnnouncement.isNew}
                     onChange={e => setNewAnnouncement({...newAnnouncement, isNew: e.target.checked})}
-                    className="rounded text-blue-600"
+                    className="rounded text-brand-purple"
                   />
                   <span className="text-sm font-medium text-gray-700 dark:text-gray-300">New Tag</span>
                 </label>
               </div>
               <button
                 type="submit"
-                className="w-full py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
+                className="w-full py-2 bg-brand-purple text-white rounded-xl font-medium hover:bg-brand-purple-light transition-colors"
               >
                 Add Announcement
               </button>
             </form>
 
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
-              {dashboardAnnouncements.map((announcement, idx) => (
-                <div key={`announcement-${idx}-${announcement.id}`} className="p-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl relative group">
+              {dashboardAnnouncements.map((announcement) => (
+                <div key={announcement.id || Math.random().toString()} className="p-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl relative group">
                   <div className="flex items-center gap-2 mb-1">
                     {announcement.isNew && (
                       <span className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold rounded">NEW</span>
@@ -389,11 +389,11 @@ export default function Admin() {
                 placeholder="New slot (e.g. PW)"
                 value={newCategory}
                 onChange={e => setNewCategory(e.target.value)}
-                className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none"
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-brand-purple text-white rounded-xl hover:bg-brand-purple-light transition-colors"
               >
                 Add
               </button>
@@ -428,7 +428,7 @@ export default function Admin() {
                   required
                   value={newTest.title}
                   onChange={e => setNewTest({...newTest, title: e.target.value})}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none transition-all"
                   placeholder="e.g. Minor Test 1"
                 />
               </div>
@@ -439,7 +439,7 @@ export default function Admin() {
                   required
                   value={newTest.type}
                   onChange={e => setNewTest({...newTest, type: e.target.value})}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none transition-all"
                 >
                   <option value="">Select slot</option>
                   {uniqueCategories.map((cat, idx) => (
@@ -455,7 +455,7 @@ export default function Admin() {
                   required
                   value={newTest.driveLink}
                   onChange={e => setNewTest({...newTest, driveLink: e.target.value})}
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-brand-purple outline-none transition-all"
                   placeholder="https://drive.google.com/..."
                 />
               </div>
@@ -465,7 +465,7 @@ export default function Admin() {
                 whileTap={{ scale: 0.98 }}
                 disabled={loading}
                 type="submit"
-                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-600/30 hover:opacity-90 transition-opacity disabled:opacity-50 flex justify-center items-center gap-2"
+                className="w-full py-3 bg-gradient-brand text-white rounded-xl font-semibold shadow-lg shadow-brand-purple/30 hover:opacity-90 transition-opacity disabled:opacity-50 flex justify-center items-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                 Add Paper
@@ -486,13 +486,13 @@ export default function Admin() {
                   placeholder="Search papers..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none dark:text-white w-full sm:w-64"
+                  className="pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-brand-purple outline-none dark:text-white w-full sm:w-64"
                 />
               </div>
             </div>
             <div className="flex-1 overflow-y-auto pr-2 space-y-3">
-              {filteredTests.map((test, idx) => (
-                <div key={`test-${idx}-${test.id}`} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 group hover:border-blue-200 dark:hover:border-blue-800 transition-colors gap-4">
+              {filteredTests.map((test) => (
+                <div key={test.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 group hover:border-brand-purple/30 dark:hover:border-brand-purple/50 transition-colors gap-4">
                   {editingId === test.id ? (
                     <div className="flex-1 space-y-3 w-full">
                       <input
@@ -521,7 +521,7 @@ export default function Admin() {
                     <div className="flex-1 min-w-0">
                       <h3 className="font-semibold text-gray-900 dark:text-white truncate">{test.title}</h3>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="px-2.5 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium rounded-lg shrink-0">
+                        <span className="px-2.5 py-1 bg-brand-purple/20 dark:bg-brand-purple/30 text-brand-purple dark:text-brand-purple-light text-xs font-medium rounded-lg shrink-0">
                           {test.type}
                         </span>
                         <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
@@ -554,7 +554,7 @@ export default function Admin() {
                             setEditingId(test.id);
                             setEditData({ title: test.title, type: test.type, driveLink: test.driveLink });
                           }}
-                          className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
+                          className="p-2 text-brand-purple hover:bg-brand-purple/10 dark:hover:bg-brand-purple/30 rounded-lg transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>

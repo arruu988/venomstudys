@@ -73,7 +73,7 @@ export default function TestPapers() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-6"
     >
       <motion.div variants={item} className="mb-8">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Test Papers</h1>
+        <h1 className="text-3xl font-bold text-gradient-brand tracking-tight">Test Papers</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">Browse and view all test materials</p>
       </motion.div>
 
@@ -85,7 +85,7 @@ export default function TestPapers() {
           placeholder="Search by file name or test number..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-900 outline-none transition-all shadow-sm text-gray-900 dark:text-white"
+          className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-brand-purple dark:focus:border-brand-purple focus:ring-2 focus:ring-brand-purple/30 dark:focus:ring-brand-purple/40 outline-none transition-all shadow-sm text-gray-900 dark:text-white"
         />
       </motion.div>
 
@@ -97,7 +97,7 @@ export default function TestPapers() {
             onClick={() => setActiveTab(cat)}
             className={`flex-1 min-w-[120px] py-3 px-4 text-center font-semibold rounded-xl transition-all relative z-10 ${
               activeTab === cat 
-                ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md shadow-indigo-600/20' 
+                ? 'text-white bg-gradient-brand shadow-md shadow-brand-purple/20' 
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
             }`}
           >
@@ -111,44 +111,50 @@ export default function TestPapers() {
         {loading ? (
           <div className="flex items-center justify-center h-48 text-gray-400">Loading...</div>
         ) : (
-          <AnimatePresence mode="popLayout">
+          <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredTests.map((test, idx) => (
-                <motion.button
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  key={`test-${idx}-${test.id}`}
-                  onClick={() => openViewer(test.driveLink, test.title, test.id)}
-                  className="text-left flex items-center justify-between p-4 md:p-5 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 group transition-colors shadow-sm"
-                >
+              <AnimatePresence mode="popLayout">
+                {filteredTests.map((test) => (
+                  <motion.button
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    key={test.id}
+                    onClick={() => openViewer(test.driveLink, test.title, test.id)}
+                    className="text-left flex items-center justify-between p-4 md:p-5 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:border-brand-purple/30 dark:hover:border-brand-purple/50 hover:bg-brand-purple/10 dark:hover:bg-brand-purple/20 group transition-colors shadow-sm"
+                  >
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm border border-gray-100 dark:border-gray-700 group-hover:border-blue-200 dark:group-hover:border-blue-700 transition-colors">
-                      <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                    <div className="w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center shadow-sm border border-gray-100 dark:border-gray-700 group-hover:border-brand-purple/30 dark:group-hover:border-brand-purple/40 transition-colors">
+                      <FileText className="w-6 h-6 text-brand-purple dark:text-brand-purple-light" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-1">{test.title}</h3>
                       <p className="text-sm text-gray-500 dark:text-gray-400">{new Date(test.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors" />
+                  <ChevronRight className="w-5 h-5 text-gray-300 dark:text-gray-600 group-hover:text-brand-purple-light dark:group-hover:text-brand-purple-light transition-colors" />
                 </motion.button>
               ))}
+              </AnimatePresence>
             </div>
+            <AnimatePresence>
             {filteredTests.length === 0 && (
               <motion.div
+                key="empty-state"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex flex-col items-center justify-center h-48 text-gray-500 dark:text-gray-400"
+                exit={{ opacity: 0 }}
+                className="flex flex-col items-center justify-center h-48 text-gray-500 dark:text-gray-400 mt-4"
               >
                 <FileText className="w-12 h-12 text-gray-300 dark:text-gray-600 mb-3" />
                 <p>No tests found for {activeTab}.</p>
               </motion.div>
             )}
-          </AnimatePresence>
+            </AnimatePresence>
+          </>
         )}
       </motion.div>
     </motion.div>

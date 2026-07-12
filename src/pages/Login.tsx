@@ -68,7 +68,7 @@ export default function Login() {
         className="w-full max-w-md bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-gray-700"
       >
         <motion.div variants={item} className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center rotate-3">
+          <div className="w-16 h-16 bg-brand-purple rounded-2xl flex items-center justify-center rotate-3">
             <BookOpen className="w-8 h-8 text-white -rotate-3" />
           </div>
         </motion.div>
@@ -93,7 +93,7 @@ export default function Login() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-brand-purple focus:border-transparent transition-all outline-none"
                 placeholder="Student Name"
                 required={!isLogin}
               />
@@ -105,7 +105,7 @@ export default function Login() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-brand-purple focus:border-transparent transition-all outline-none"
               placeholder="Enter your email"
               required
             />
@@ -116,7 +116,7 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
+              className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-brand-purple focus:border-transparent transition-all outline-none"
               placeholder="••••••••"
               required
             />
@@ -126,7 +126,7 @@ export default function Login() {
             whileTap={{ scale: 0.98 }}
             disabled={loading}
             type="submit"
-            className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-600/30 hover:opacity-90 transition-opacity disabled:opacity-70"
+            className="w-full py-3 bg-gradient-brand text-white rounded-xl font-semibold shadow-lg shadow-brand-purple/30 hover:opacity-90 transition-opacity disabled:opacity-70"
           >
             {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
           </motion.button>
@@ -135,7 +135,7 @@ export default function Login() {
         <motion.div variants={item} className="mt-6 text-center">
           <button
             onClick={() => setIsLogin(!isLogin)}
-            className="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+            className="text-sm text-gray-500 dark:text-gray-400 hover:text-brand-purple dark:hover:text-brand-purple-light transition-colors font-medium"
           >
             {isLogin ? "Don't have an account? Sign up" : "Already have an account? Login"}
           </button>

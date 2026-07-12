@@ -31,7 +31,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
             to={item.to}
             className={({ isActive }) =>
               `flex flex-col items-center p-2 rounded-xl transition-colors ${
-                isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                isActive ? 'text-brand-purple dark:text-brand-purple-light' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
               }`
             }
           >
@@ -42,7 +42,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
                 {isActive && (
                   <motion.div
                     layoutId="mobile-indicator"
-                    className="absolute bottom-1 w-1 h-1 bg-blue-600 dark:bg-blue-400 rounded-full"
+                    className="absolute bottom-1 w-1 h-1 bg-brand-purple dark:bg-brand-purple-light rounded-full"
                   />
                 )}
               </>
@@ -55,7 +55,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
       <aside className="hidden md:flex flex-col w-64 fixed top-0 bottom-0 left-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40">
         <div className="p-6 flex items-center gap-3">
           <img src="https://i.ibb.co/h14GX9Ps/IMG-20260709-200844-549.jpg" alt="Logo" className="w-10 h-10 rounded-xl object-cover border border-gray-100 dark:border-gray-800 shadow-sm" />
-          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">NEET Breakers</h1>
+          <h1 className="text-2xl font-bold text-gradient-brand tracking-tight">NEET Breakers</h1>
         </div>
         <nav className="flex-1 px-4 space-y-2 overflow-y-auto">
           {navItems.map((item) => (
@@ -64,7 +64,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
               to={item.to}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl transition-colors relative ${
-                  isActive ? 'text-blue-700 dark:text-blue-400 bg-blue-50/50 dark:bg-blue-900/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                  isActive ? 'text-brand-purple dark:text-brand-purple-light bg-brand-purple/10/50 dark:bg-brand-purple/20' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50'
                 }`
               }
             >
@@ -75,7 +75,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
                   {isActive && (
                     <motion.div
                       layoutId="desktop-indicator"
-                      className="absolute left-0 top-2 bottom-2 w-1 bg-blue-600 dark:bg-blue-400 rounded-r-full"
+                      className="absolute left-0 top-2 bottom-2 w-1 bg-brand-purple dark:bg-brand-purple-light rounded-r-full"
                     />
                   )}
                 </>

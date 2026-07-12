@@ -72,7 +72,7 @@ export default function SavedFiles() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-6"
     >
       <motion.div variants={itemAnim} className="mb-8">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Saved & Recent Files</h1>
+        <h1 className="text-3xl font-bold text-gradient-brand tracking-tight">Saved & Recent Files</h1>
         <p className="text-gray-500 mt-1">Your recently viewed test papers</p>
       </motion.div>
 
@@ -82,14 +82,14 @@ export default function SavedFiles() {
         ) : (
           <div className="space-y-4">
             <AnimatePresence>
-              {history.map((item, idx) => (
+              {history.map((item) => (
                 <motion.div
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  key={`history-${idx}-${item.id}`}
-                  className="flex items-center justify-between p-4 md:p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-blue-200 transition-colors shadow-sm group cursor-pointer"
+                  key={item.id}
+                  className="flex items-center justify-between p-4 md:p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-brand-purple/30 transition-colors shadow-sm group cursor-pointer"
                   onClick={() => openViewer(item.testDetails.driveLink, item.testDetails.title, item.testDetails.id)}
                 >
                   <div className="flex items-center gap-4">
@@ -109,7 +109,7 @@ export default function SavedFiles() {
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
-                    <div className="p-3 bg-blue-50 text-blue-600 rounded-xl hidden md:block">
+                    <div className="p-3 bg-brand-purple/10 text-brand-purple rounded-xl hidden md:block">
                       <ArrowRight className="w-5 h-5" />
                     </div>
                   </div>
