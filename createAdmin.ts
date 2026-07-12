@@ -15,7 +15,7 @@ const auth = getAuth(app);
 
 async function createAdmin() {
   try {
-    await createUserWithEmailAndPassword(auth, "nottmeeeeeeeee@gmail.com", "admin123");
+    await createUserWithEmailAndPassword(auth, "nottmeeeeeeeee@gmail.com", "NeetAdmin@2026!");
     console.log("Admin created");
   } catch (err) {
     console.log("Admin creation error:", err.message);

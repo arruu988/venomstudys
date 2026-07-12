@@ -28,20 +28,26 @@ export default function App() {
       setLoading(false);
     });
 
+    return () => {
+      unsubscribeAuth();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    
     const unsubscribeSettings = onSnapshot(doc(db, "settings", "general"), (doc) => {
       if (doc.exists()) {
         const data = doc.data();
         setIsLocked(data.isLocked === true);
       }
     }, (error) => {
-      console.error("Error fetching settings:", error);
+      // Silently handle permission errors if rules are restrictive
+      console.log("Settings not accessible or do not exist yet.");
     });
 
-    return () => {
-      unsubscribeAuth();
-      unsubscribeSettings();
-    };
-  }, []);
+    return () => unsubscribeSettings();
+  }, [user]);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">Loading...</div>;

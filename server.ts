@@ -25,7 +25,7 @@ async function startServer() {
 
   // Authenticate server
   try {
-    await signInWithEmailAndPassword(auth, "nottmeeeeeeeee@gmail.com", "admin123");
+    await signInWithEmailAndPassword(auth, "nottmeeeeeeeee@gmail.com", "NeetAdmin@2026!");
     console.log("Server authenticated with Firebase");
   } catch (error) {
     console.error("Failed to authenticate server:", error);

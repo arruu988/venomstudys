@@ -34,6 +34,8 @@ export default function TestPapers() {
           setActiveTab(docSnap.data().categories[0] || '');
         }
       }
+    }, (error) => {
+      console.log("Settings not accessible or do not exist yet.");
     });
 
     return () => unsubscribeSettings();

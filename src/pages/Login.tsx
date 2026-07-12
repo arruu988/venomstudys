@@ -7,8 +7,8 @@ import { BookOpen } from 'lucide-react';
 
 export default function Login() {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('test@vnm.com');
-  const [password, setPassword] = useState('password123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,11 @@ export default function Login() {
         }, { merge: true });
       }
     } catch (err: any) {
-      setError(err.message);
+      if (err.code === 'auth/invalid-credential') {
+        setError('Please create an account first before logging in.');
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }

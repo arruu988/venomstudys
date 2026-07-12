@@ -73,6 +73,8 @@ export default function Admin() {
           dashboardAnnouncements: defaultAnnouncements
         });
       }
+    }, (error) => {
+      console.log("Settings not accessible or do not exist yet.");
     });
 
     return () => unsubscribeSettings();
