@@ -33,11 +33,12 @@ export default function PDFViewerModal() {
 
   if (!isOpen || !driveUrl) return null;
 
-  // We proxy the Google Drive link through corsproxy to bypass CORS on static hosting like Vercel
+  // Use iframe embed for Google Drive links to bypass all CORS issues on static hosts
   const match = driveUrl.match(new RegExp('/d/([a-zA-Z0-9_-]+)'));
-  const fileId = match ? match[1] : driveUrl;
-  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}&confirm=t`;
-  const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(downloadUrl)}`;
+  const fileId = match ? match[1] : null;
+  const isGoogleDrive = !!fileId;
+  const driveEmbedUrl = fileId ? `https://drive.google.com/file/d/${fileId}/preview` : driveUrl;
+
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
@@ -76,6 +77,7 @@ export default function PDFViewerModal() {
             <h2 className="font-medium truncate max-w-[200px] md:max-w-md">{title}</h2>
           </div>
 
+          {!isGoogleDrive && (
           <div className="flex items-center gap-4">
             <div className="flex items-center bg-gray-800 rounded-lg p-1">
               <button
@@ -93,6 +95,7 @@ export default function PDFViewerModal() {
               </button>
             </div>
           </div>
+          )}
         </div>
 
         {/* PDF Content area */}
@@ -107,8 +110,16 @@ export default function PDFViewerModal() {
               </div>
             )}
             {!hasError ? (
+              isGoogleDrive ? (
+                <iframe
+                  src={driveEmbedUrl}
+                  className="w-full h-full min-h-[75vh] border-0 rounded-xl"
+                  allow="autoplay"
+                  onLoad={() => setLoading(false)}
+                ></iframe>
+              ) : (
               <Document
-                file={proxyUrl}
+                file={driveEmbedUrl}
                 onLoadSuccess={onDocumentLoadSuccess}
                 loading={<div className="text-gray-400">Loading document...</div>}
                 onLoadError={(error) => {
@@ -126,6 +137,7 @@ export default function PDFViewerModal() {
                   className="shadow-2xl shadow-black/50"
                 />
               </Document>
+              )
             ) : (
               <div className="w-full h-full min-h-[60vh] md:min-h-[80vh] flex items-center justify-center bg-gray-800 rounded-xl overflow-hidden border border-gray-700 text-red-400 p-4">
                 Error loading the test paper.
@@ -135,6 +147,7 @@ export default function PDFViewerModal() {
         </div>
 
         {/* Footer Navigation */}
+        {!isGoogleDrive && (
         <div className="bg-gray-900 border-t border-gray-800 p-4 flex items-center justify-center gap-6">
           <button
             type="button"
@@ -158,6 +171,7 @@ export default function PDFViewerModal() {
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
+        )}
       </motion.div>
     </AnimatePresence>
   );
