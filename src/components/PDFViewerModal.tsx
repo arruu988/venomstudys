@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { useViewerStore } from '../lib/store';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Download } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Maximize, Minimize } from 'lucide-react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { doc, setDoc } from 'firebase/firestore';
@@ -18,6 +18,27 @@ export default function PDFViewerModal() {
   const [scale, setScale] = useState(1.0);
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   // Save to "Recently Viewed/Saved"
   useEffect(() => {
@@ -76,10 +97,17 @@ export default function PDFViewerModal() {
             </button>
             <h2 className="font-medium truncate max-w-[200px] md:max-w-md">{title}</h2>
           </div>
-
-          {!isGoogleDrive && (
-          <div className="flex items-center gap-4">
-            <div className="flex items-center bg-gray-800 rounded-lg p-1">
+          
+          <div className="flex items-center gap-2 md:gap-4">
+            <button
+              onClick={toggleFullscreen}
+              className="p-2 hover:bg-gray-800 rounded-full transition-colors text-gray-300 hover:text-white"
+              title="Toggle Fullscreen"
+            >
+              {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
+            </button>
+            {!isGoogleDrive && (
+            <div className="flex items-center bg-gray-800 rounded-lg p-1 hidden sm:flex">
               <button
                 onClick={() => setScale(s => Math.max(0.5, s - 0.2))}
                 className="p-1.5 hover:bg-gray-700 rounded-md transition-colors"
@@ -94,8 +122,8 @@ export default function PDFViewerModal() {
                 <ZoomIn className="w-5 h-5" />
               </button>
             </div>
+            )}
           </div>
-          )}
         </div>
 
         {/* PDF Content area */}
@@ -111,12 +139,14 @@ export default function PDFViewerModal() {
             )}
             {!hasError ? (
               isGoogleDrive ? (
-                <iframe
-                  src={driveEmbedUrl}
-                  className="w-full h-full min-h-[75vh] border-0 rounded-xl"
-                  allow="autoplay"
-                  onLoad={() => setLoading(false)}
-                ></iframe>
+                <div className="w-full h-full min-h-[75vh] md:min-h-[85vh] rounded-xl overflow-hidden relative bg-white">
+                  <iframe
+                    src={driveEmbedUrl}
+                    className="absolute top-[-56px] left-0 w-full h-[calc(100%+56px)] border-0"
+                    allow="autoplay"
+                    onLoad={() => setLoading(false)}
+                  ></iframe>
+                </div>
               ) : (
               <Document
                 file={driveEmbedUrl}
