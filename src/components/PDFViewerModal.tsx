@@ -33,8 +33,11 @@ export default function PDFViewerModal() {
 
   if (!isOpen || !driveUrl) return null;
 
-  // We proxy the Google Drive link through our server
-  const proxyUrl = `/api/pdf?url=${encodeURIComponent(driveUrl)}`;
+  // We proxy the Google Drive link through corsproxy to bypass CORS on static hosting like Vercel
+  const match = driveUrl.match(new RegExp('/d/([a-zA-Z0-9_-]+)'));
+  const fileId = match ? match[1] : driveUrl;
+  const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}&confirm=t`;
+  const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(downloadUrl)}`;
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);

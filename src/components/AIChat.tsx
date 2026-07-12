@@ -35,15 +35,26 @@ export default function AIChat() {
     setIsLoading(true);
 
     try {
-      // Hit our Express proxy to hide the OpenRouter key
-      const response = await fetch('/api/chat', {
+      const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY || "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";
+      
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+          'HTTP-Referer': 'https://vnm-study.app',
+          'X-Title': 'NEET Breakers Archive'
+        },
         body: JSON.stringify({
-          messages: [...messages, userMessage].map(m => ({
-            role: m.role,
-            content: m.content
-          }))
+          model: 'openrouter/free',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are "Neet Breakers AI", an expert AI tutor specializing in NEET exam preparation. Your goal is to help students solve physics, chemistry, and biology doubts accurately and concisely.'
+            },
+            ...messages.map(m => ({ role: m.role, content: m.content })),
+            userMessage
+          ]
         })
       });
 
