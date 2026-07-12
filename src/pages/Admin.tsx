@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, setDoc, onSnapshot, getCountFromServer } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { motion } from 'motion/react';
-import { Plus, Trash2, ShieldAlert, Users, Lock, Unlock, Loader2, Activity, Send } from 'lucide-react';
+import { Plus, Trash2, ShieldAlert, Users, Lock, Unlock, Loader2, Activity, Send, Search, Edit2, Check, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function Admin() {
@@ -17,6 +17,9 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [dashboardAnnouncements, setDashboardAnnouncements] = useState<any[]>([]);
   const [newAnnouncement, setNewAnnouncement] = useState({ text: '', time: 'Today', isNew: false });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editData, setEditData] = useState({ title: '', type: '', driveLink: '' });
 
   const fetchTests = async () => {
     try {
@@ -130,17 +133,35 @@ export default function Admin() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this test?")) {
-      try {
-        await deleteDoc(doc(db, "tests", id));
-        fetchTests();
-        fetchStats();
-        toast.success("Paper deleted successfully!");
-      } catch (error: any) {
-        toast.error("Error deleting test: " + error.message);
-      }
+    try {
+      await deleteDoc(doc(db, "tests", id));
+      fetchTests();
+      fetchStats();
+      toast.success("Paper deleted successfully!");
+    } catch (error: any) {
+      toast.error("Error deleting test: " + error.message);
     }
   };
+
+  const handleUpdate = async (id: string) => {
+    if (!editData.title || !editData.type || !editData.driveLink) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    try {
+      await setDoc(doc(db, "tests", id), editData, { merge: true });
+      fetchTests();
+      setEditingId(null);
+      toast.success("Paper updated successfully!");
+    } catch (error: any) {
+      toast.error("Error updating test: " + error.message);
+    }
+  };
+
+  const filteredTests = tests.filter(test => 
+    test.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    test.type.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleUpdateBroadcast = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -456,30 +477,99 @@ export default function Admin() {
         {/* Right Column: List */}
         <div className="lg:col-span-2">
           <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 h-[800px] flex flex-col">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Manage Uploaded Papers</h2>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white">Manage Uploaded Papers</h2>
+              <div className="relative">
+                <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Search papers..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none dark:text-white w-full sm:w-64"
+                />
+              </div>
+            </div>
             <div className="flex-1 overflow-y-auto pr-2 space-y-3">
-              {tests.map(test => (
-                <div key={test.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 group hover:border-blue-200 dark:hover:border-blue-800 transition-colors">
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">{test.title}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="px-2.5 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium rounded-lg">
-                        {test.type}
-                      </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px] md:max-w-xs">
-                        {test.driveLink}
-                      </span>
+              {filteredTests.map(test => (
+                <div key={test.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 group hover:border-blue-200 dark:hover:border-blue-800 transition-colors gap-4">
+                  {editingId === test.id ? (
+                    <div className="flex-1 space-y-3 w-full">
+                      <input
+                        type="text"
+                        value={editData.title}
+                        onChange={(e) => setEditData({...editData, title: e.target.value})}
+                        className="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm dark:text-white"
+                      />
+                      <div className="flex gap-2">
+                        <select
+                          value={editData.type}
+                          onChange={(e) => setEditData({...editData, type: e.target.value})}
+                          className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm dark:text-white w-32"
+                        >
+                          {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                        </select>
+                        <input
+                          type="text"
+                          value={editData.driveLink}
+                          onChange={(e) => setEditData({...editData, driveLink: e.target.value})}
+                          className="flex-1 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm dark:text-white"
+                        />
+                      </div>
                     </div>
+                  ) : (
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-gray-900 dark:text-white truncate">{test.title}</h3>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="px-2.5 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs font-medium rounded-lg shrink-0">
+                          {test.type}
+                        </span>
+                        <span className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                          {test.driveLink}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                    {editingId === test.id ? (
+                      <>
+                        <button
+                          onClick={() => handleUpdate(test.id)}
+                          className="p-2 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors"
+                        >
+                          <Check className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className="p-2 text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                        >
+                          <X className="w-5 h-5" />
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => {
+                            setEditingId(test.id);
+                            setEditData({ title: test.title, type: test.type, driveLink: test.driveLink });
+                          }}
+                          className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
+                        >
+                          <Edit2 className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(test.id)}
+                          className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
                   </div>
-                  <button
-                    onClick={() => handleDelete(test.id)}
-                    className="p-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-xl transition-colors opacity-100 md:opacity-0 md:group-hover:opacity-100 focus:opacity-100"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
                 </div>
               ))}
-              {tests.length === 0 && (
+              {filteredTests.length === 0 && (
                 <div className="h-full flex flex-col items-center justify-center text-gray-500 dark:text-gray-400">
                   <p>No tests found.</p>
                 </div>
