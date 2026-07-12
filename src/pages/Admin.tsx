@@ -15,6 +15,8 @@ export default function Admin() {
   const [broadcastActive, setBroadcastActive] = useState(false);
   const [stats, setStats] = useState({ totalUsers: 0, totalTests: 0 });
   const [loading, setLoading] = useState(false);
+  const [dashboardAnnouncements, setDashboardAnnouncements] = useState<any[]>([]);
+  const [newAnnouncement, setNewAnnouncement] = useState({ text: '', time: 'Today', isNew: false });
 
   const fetchTests = async () => {
     try {
@@ -53,13 +55,22 @@ export default function Admin() {
         if (data.categories) {
           setCategories(data.categories);
         }
+        if (data.dashboardAnnouncements) {
+          setDashboardAnnouncements(data.dashboardAnnouncements);
+        }
       } else {
         // Initialize settings if they don't exist
+        const defaultAnnouncements = [
+          { id: '1', isNew: true, time: 'Today', text: 'NEET 2026 Test Series schedule has been updated. Check the new dates!' },
+          { id: '2', isNew: false, time: '2 days ago', text: 'Aakash Major Test 3 syllabus uploaded in the test section.' }
+        ];
+        
         setDoc(doc(db, "settings", "general"), {
           isLocked: false,
           categories: ['Aakash', 'Allen', 'PW'],
           broadcastMessage: '',
-          broadcastActive: false
+          broadcastActive: false,
+          dashboardAnnouncements: defaultAnnouncements
         });
       }
     });
@@ -139,6 +150,32 @@ export default function Admin() {
       toast.success("Announcement settings updated!");
     } catch (error: any) {
       toast.error("Error updating announcement: " + error.message);
+    }
+  };
+
+  const handleAddAnnouncement = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newAnnouncement.text.trim()) return;
+    try {
+      const updated = [{
+        id: Date.now().toString(),
+        ...newAnnouncement
+      }, ...dashboardAnnouncements];
+      await setDoc(doc(db, "settings", "general"), { dashboardAnnouncements: updated }, { merge: true });
+      setNewAnnouncement({ text: '', time: 'Today', isNew: false });
+      toast.success("Dashboard announcement added!");
+    } catch (error: any) {
+      toast.error("Error adding announcement: " + error.message);
+    }
+  };
+
+  const handleRemoveAnnouncement = async (id: string) => {
+    try {
+      const updated = dashboardAnnouncements.filter(a => a.id !== id);
+      await setDoc(doc(db, "settings", "general"), { dashboardAnnouncements: updated }, { merge: true });
+      toast.success("Announcement removed!");
+    } catch (error: any) {
+      toast.error("Error removing announcement: " + error.message);
     }
   };
 
@@ -232,6 +269,70 @@ export default function Admin() {
                 Update Announcement
               </button>
             </form>
+          </div>
+
+          {/* Dashboard Announcements (Static List) */}
+          <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Dashboard Announcements</h2>
+            
+            <form onSubmit={handleAddAnnouncement} className="space-y-3 mb-6">
+              <input
+                type="text"
+                placeholder="Message text..."
+                value={newAnnouncement.text}
+                onChange={e => setNewAnnouncement({...newAnnouncement, text: e.target.value})}
+                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Time (e.g. Today)"
+                  value={newAnnouncement.time}
+                  onChange={e => setNewAnnouncement({...newAnnouncement, time: e.target.value})}
+                  className="flex-1 px-4 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <label className="flex items-center gap-2 px-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={newAnnouncement.isNew}
+                    onChange={e => setNewAnnouncement({...newAnnouncement, isNew: e.target.checked})}
+                    className="rounded text-blue-600"
+                  />
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">New Tag</span>
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="w-full py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors"
+              >
+                Add Announcement
+              </button>
+            </form>
+
+            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+              {dashboardAnnouncements.map((announcement) => (
+                <div key={announcement.id} className="p-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl relative group">
+                  <div className="flex items-center gap-2 mb-1">
+                    {announcement.isNew && (
+                      <span className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold rounded">NEW</span>
+                    )}
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{announcement.time}</span>
+                  </div>
+                  <p className="text-sm text-gray-800 dark:text-gray-200 font-medium pr-8">{announcement.text}</p>
+                  
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveAnnouncement(announcement.id)}
+                    className="absolute right-2 top-2 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+              {dashboardAnnouncements.length === 0 && (
+                <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">No announcements added.</p>
+              )}
+            </div>
           </div>
 
           {/* Manage Categories */}

@@ -10,6 +10,7 @@ export default function Dashboard() {
   const [recentTests, setRecentTests] = useState<any[]>([]);
   const [broadcastMessage, setBroadcastMessage] = useState('');
   const [broadcastActive, setBroadcastActive] = useState(false);
+  const [dashboardAnnouncements, setDashboardAnnouncements] = useState<any[]>([]);
   const { openViewer } = useViewerStore();
 
   useEffect(() => {
@@ -30,6 +31,15 @@ export default function Dashboard() {
         const data = doc.data();
         setBroadcastMessage(data.broadcastMessage || '');
         setBroadcastActive(data.broadcastActive === true);
+        if (data.dashboardAnnouncements) {
+          setDashboardAnnouncements(data.dashboardAnnouncements);
+        } else {
+          // Fallback if not populated yet
+          setDashboardAnnouncements([
+            { id: '1', isNew: true, time: 'Today', text: 'NEET 2026 Test Series schedule has been updated. Check the new dates!' },
+            { id: '2', isNew: false, time: '2 days ago', text: 'Aakash Major Test 3 syllabus uploaded in the test section.' }
+          ]);
+        }
       }
     });
 
@@ -71,19 +81,21 @@ export default function Dashboard() {
               )}
             </AnimatePresence>
 
-            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-md">NEW</span>
-                <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3"/> Today</span>
+            {dashboardAnnouncements.map((announcement) => (
+              <div key={announcement.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+                <div className="flex items-center gap-2 mb-2">
+                  {announcement.isNew && (
+                    <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-md">NEW</span>
+                  )}
+                  <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3"/> {announcement.time}</span>
+                </div>
+                <p className="text-gray-800 dark:text-gray-200 font-medium">{announcement.text}</p>
               </div>
-              <p className="text-gray-800 dark:text-gray-200 font-medium">NEET 2026 Test Series schedule has been updated. Check the new dates!</p>
-            </div>
-            <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3"/> 2 days ago</span>
-              </div>
-              <p className="text-gray-800 dark:text-gray-200 font-medium">Aakash Major Test 3 syllabus uploaded in the test section.</p>
-            </div>
+            ))}
+            
+            {dashboardAnnouncements.length === 0 && (
+              <p className="text-gray-500 dark:text-gray-400 text-center py-4">No announcements right now.</p>
+            )}
           </div>
         </div>
 
