@@ -73,7 +73,7 @@ export default function TestPapers() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-6"
     >
       <motion.div variants={item} className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Test Papers</h1>
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Test Papers</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">Browse and view all test materials</p>
       </motion.div>
 
@@ -95,9 +95,9 @@ export default function TestPapers() {
           <button
             key={`tab-${idx}-${cat}`}
             onClick={() => setActiveTab(cat)}
-            className={`flex-1 min-w-[120px] py-3 px-4 text-center font-semibold rounded-xl transition-colors relative z-10 ${
+            className={`flex-1 min-w-[120px] py-3 px-4 text-center font-semibold rounded-xl transition-all relative z-10 ${
               activeTab === cat 
-                ? 'text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30' 
+                ? 'text-white bg-gradient-to-r from-blue-600 to-indigo-600 shadow-md shadow-indigo-600/20' 
                 : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50'
             }`}
           >

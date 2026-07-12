@@ -33,7 +33,7 @@ export default function AIChat() {
     setIsLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY || "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";
+      const apiKey = (import.meta as any).env.VITE_OPENROUTER_API_KEY || "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";
       
       const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -123,7 +123,7 @@ export default function AIChat() {
               </div>
               <div className={`p-4 rounded-2xl text-base leading-relaxed ${
                 msg.role === 'user' 
-                  ? 'bg-blue-600 text-white rounded-tr-sm' 
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-tr-sm' 
                   : 'bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200 rounded-tl-sm shadow-sm'
               }`}>
                 {msg.content}
@@ -160,7 +160,7 @@ export default function AIChat() {
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="absolute right-3 p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 transition-colors"
+            className="absolute right-3 p-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:opacity-90 disabled:opacity-50 disabled:hover:opacity-100 transition-opacity"
           >
             <Send className="w-5 h-5 md:w-6 md:h-6" />
           </button>

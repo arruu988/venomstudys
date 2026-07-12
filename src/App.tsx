@@ -22,6 +22,7 @@ function AnimatedRoutes({ user, isAdmin }: { user: User | null; isAdmin: boolean
 
   return (
     <AnimatePresence mode="wait">
+      {/* @ts-ignore */}
       <Routes location={location} key={location.pathname}>
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
         

@@ -13,7 +13,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
     { to: "/", icon: Home, label: "Home" },
     { to: "/tests", icon: FileText, label: "Test Papers" },
     { to: "/saved", icon: Download, label: "Saved Files" },
-    { to: "/ai-chat", icon: Bot, label: "Neet Breaker AI" },
+    { to: "/ai-chat", icon: Bot, label: "Neet Breakers AI" },
     { to: "/profile", icon: User, label: "Profile" },
   ];
 
@@ -55,7 +55,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
       <aside className="hidden md:flex flex-col w-64 fixed top-0 bottom-0 left-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 z-40">
         <div className="p-6 flex items-center gap-3">
           <img src="https://i.ibb.co/h14GX9Ps/IMG-20260709-200844-549.jpg" alt="Logo" className="w-10 h-10 rounded-xl object-cover border border-gray-100 dark:border-gray-800 shadow-sm" />
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">NEET Breakers Archive</h1>
+          <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">NEET Breakers</h1>
         </div>
         <nav className="flex-1 px-4 space-y-2 overflow-y-auto">
           {navItems.map((item) => (

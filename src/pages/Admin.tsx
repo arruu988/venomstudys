@@ -181,7 +181,7 @@ export default function Admin() {
     if (!newAnnouncement.text.trim()) return;
     try {
       const updated = [{
-        id: Date.now().toString(),
+        id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
         ...newAnnouncement
       }, ...dashboardAnnouncements];
       await setDoc(doc(db, "settings", "general"), { dashboardAnnouncements: updated }, { merge: true });
@@ -232,7 +232,7 @@ export default function Admin() {
           <ShieldAlert className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">Admin Dashboard</h1>
           <p className="text-gray-500 dark:text-gray-400">Manage site settings, categories, and test papers</p>
         </div>
       </motion.div>
@@ -465,7 +465,7 @@ export default function Admin() {
                 whileTap={{ scale: 0.98 }}
                 disabled={loading}
                 type="submit"
-                className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-colors disabled:opacity-50 flex justify-center items-center gap-2"
+                className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-600/30 hover:opacity-90 transition-opacity disabled:opacity-50 flex justify-center items-center gap-2"
               >
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Plus className="w-5 h-5" />}
                 Add Paper
@@ -507,7 +507,7 @@ export default function Admin() {
                           onChange={(e) => setEditData({...editData, type: e.target.value})}
                           className="px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-sm dark:text-white w-32"
                         >
-                          {categories.map(c => <option key={c} value={c}>{c}</option>)}
+                          {uniqueCategories.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
                         <input
                           type="text"

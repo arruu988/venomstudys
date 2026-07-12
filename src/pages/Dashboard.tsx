@@ -72,7 +72,7 @@ export default function Dashboard() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-8"
     >
       <motion.div variants={item}>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Dashboard</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">Welcome to NEET Breakers Archive Platform</p>
       </motion.div>
 

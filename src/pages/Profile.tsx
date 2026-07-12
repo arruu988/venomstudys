@@ -83,7 +83,7 @@ export default function Profile() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-8"
     >
       <motion.div variants={itemAnim}>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Profile</h1>
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Profile</h1>
         <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your account settings and view activity.</p>
       </motion.div>
 
@@ -119,7 +119,7 @@ export default function Profile() {
             <button
               type="submit"
               disabled={loading || !displayName.trim() || displayName === auth.currentUser?.displayName}
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-70 mt-4"
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-sm hover:opacity-90 transition-opacity disabled:opacity-70 mt-4"
             >
               {loading ? 'Saving...' : 'Save Changes'}
             </button>

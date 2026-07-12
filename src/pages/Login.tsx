@@ -126,7 +126,7 @@ export default function Login() {
             whileTap={{ scale: 0.98 }}
             disabled={loading}
             type="submit"
-            className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-colors disabled:opacity-70"
+            className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-600/30 hover:opacity-90 transition-opacity disabled:opacity-70"
           >
             {loading ? 'Processing...' : (isLogin ? 'Login' : 'Sign Up')}
           </motion.button>

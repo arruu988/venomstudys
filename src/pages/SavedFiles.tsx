@@ -72,7 +72,7 @@ export default function SavedFiles() {
       className="p-4 md:p-8 max-w-5xl mx-auto space-y-6"
     >
       <motion.div variants={itemAnim} className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Saved & Recent Files</h1>
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 tracking-tight">Saved & Recent Files</h1>
         <p className="text-gray-500 mt-1">Your recently viewed test papers</p>
       </motion.div>
 
