@@ -104,8 +104,8 @@ export default function Dashboard() {
               )}
             </AnimatePresence>
 
-            {dashboardAnnouncements.map((announcement) => (
-              <div key={announcement.id} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
+            {dashboardAnnouncements.map((announcement, idx) => (
+              <div key={`announcement-${idx}-${announcement.id}`} className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
                 <div className="flex items-center gap-2 mb-2">
                   {announcement.isNew && (
                     <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-md">NEW</span>
@@ -132,11 +132,11 @@ export default function Dashboard() {
           </div>
           
           <div className="space-y-3 flex-1">
-            {recentTests.map((test) => (
+            {recentTests.map((test, idx) => (
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                key={test.id}
+                key={`recent-${idx}-${test.id}`}
                 onClick={() => openViewer(test.driveLink, test.title, test.id)}
                 className="w-full text-left flex items-center justify-between p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 transition-colors"
               >

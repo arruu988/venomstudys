@@ -138,9 +138,9 @@ export default function Profile() {
             {historyLoading ? (
               <div className="text-center py-4 text-gray-500 dark:text-gray-400">Loading activity...</div>
             ) : history.length > 0 ? (
-              history.map((item) => (
+              history.map((item, idx) => (
                 <div 
-                  key={item.id}
+                  key={`history-${idx}-${item.id}`}
                   onClick={() => openViewer(item.testDetails.driveLink, item.testDetails.title, item.testDetails.id)}
                   className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer transition-colors"
                 >

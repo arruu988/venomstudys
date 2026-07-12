@@ -113,7 +113,7 @@ export default function TestPapers() {
         ) : (
           <AnimatePresence mode="popLayout">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredTests.map((test) => (
+              {filteredTests.map((test, idx) => (
                 <motion.button
                   layout
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -121,7 +121,7 @@ export default function TestPapers() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  key={test.id}
+                  key={`test-${idx}-${test.id}`}
                   onClick={() => openViewer(test.driveLink, test.title, test.id)}
                   className="text-left flex items-center justify-between p-4 md:p-5 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-900/20 group transition-colors shadow-sm"
                 >

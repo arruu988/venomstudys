@@ -82,13 +82,13 @@ export default function SavedFiles() {
         ) : (
           <div className="space-y-4">
             <AnimatePresence>
-              {history.map((item) => (
+              {history.map((item, idx) => (
                 <motion.div
                   layout
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  key={item.id}
+                  key={`history-${idx}-${item.id}`}
                   className="flex items-center justify-between p-4 md:p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-blue-200 transition-colors shadow-sm group cursor-pointer"
                   onClick={() => openViewer(item.testDetails.driveLink, item.testDetails.title, item.testDetails.id)}
                 >

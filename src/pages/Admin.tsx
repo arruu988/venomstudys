@@ -354,8 +354,8 @@ export default function Admin() {
             </form>
 
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
-              {dashboardAnnouncements.map((announcement) => (
-                <div key={announcement.id} className="p-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl relative group">
+              {dashboardAnnouncements.map((announcement, idx) => (
+                <div key={`announcement-${idx}-${announcement.id}`} className="p-3 bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-xl relative group">
                   <div className="flex items-center gap-2 mb-1">
                     {announcement.isNew && (
                       <span className="px-2 py-0.5 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold rounded">NEW</span>
@@ -491,8 +491,8 @@ export default function Admin() {
               </div>
             </div>
             <div className="flex-1 overflow-y-auto pr-2 space-y-3">
-              {filteredTests.map(test => (
-                <div key={test.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 group hover:border-blue-200 dark:hover:border-blue-800 transition-colors gap-4">
+              {filteredTests.map((test, idx) => (
+                <div key={`test-${idx}-${test.id}`} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 group hover:border-blue-200 dark:hover:border-blue-800 transition-colors gap-4">
                   {editingId === test.id ? (
                     <div className="flex-1 space-y-3 w-full">
                       <input
