@@ -32,8 +32,8 @@ export default function Login() {
         }, { merge: true });
       }
     } catch (err: any) {
-      if (err.code === 'auth/invalid-credential') {
-        setError('Please create an account first before logging in.');
+      if (err.code === 'auth/invalid-credential' || (err.message && err.message.includes('auth/invalid-credential'))) {
+        setError('Please create an account first before logging in (Pehle account banayein, fir login karein).');
       } else {
         setError(err.message);
       }
@@ -88,7 +88,7 @@ export default function Login() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white focus:bg-white dark:focus:bg-gray-700 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all outline-none"
-              placeholder="test@example.com"
+              placeholder="Enter your email"
               required
             />
           </div>
