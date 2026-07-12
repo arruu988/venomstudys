@@ -46,7 +46,7 @@ async function startServer() {
           messages: [
             {
               role: 'system',
-              content: 'You are "NEET AI", an expert AI tutor specializing in NEET exam preparation. Your goal is to help students solve physics, chemistry, and biology doubts accurately and concisely.'
+              content: 'You are "Neet Breakers AI", an expert AI tutor specializing in NEET exam preparation. Your goal is to help students solve physics, chemistry, and biology doubts accurately and concisely.'
             },
             ...messages
           ]

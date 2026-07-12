@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { collection, query, orderBy, limit, getDocs, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../lib/firebase';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Bell, FileText, ArrowRight, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useViewerStore } from '../lib/store';
 
 export default function Dashboard() {
   const [recentTests, setRecentTests] = useState<any[]>([]);
+  const [broadcastMessage, setBroadcastMessage] = useState('');
+  const [broadcastActive, setBroadcastActive] = useState(false);
   const { openViewer } = useViewerStore();
 
   useEffect(() => {
@@ -20,7 +22,18 @@ export default function Dashboard() {
         console.error("Error fetching recent tests:", error);
       }
     };
+    
     fetchRecent();
+
+    const unsubscribeSettings = onSnapshot(doc(db, "settings", "general"), (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setBroadcastMessage(data.broadcastMessage || '');
+        setBroadcastActive(data.broadcastActive === true);
+      }
+    });
+
+    return () => unsubscribeSettings();
   }, []);
 
   return (
@@ -41,6 +54,23 @@ export default function Dashboard() {
           </div>
           
           <div className="space-y-4">
+            <AnimatePresence>
+              {broadcastActive && broadcastMessage && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 text-xs font-bold rounded-md">LIVE UPDATE</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1"><Clock className="w-3 h-3"/> Just now</span>
+                  </div>
+                  <p className="text-gray-800 dark:text-gray-200 font-medium">{broadcastMessage}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-900 border border-gray-100 dark:border-gray-800">
               <div className="flex items-center gap-2 mb-2">
                 <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-bold rounded-md">NEW</span>

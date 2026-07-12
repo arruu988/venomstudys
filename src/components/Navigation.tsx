@@ -56,7 +56,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
           }`}
         >
           <Bot className="w-6 h-6 mb-1" strokeWidth={isChatOpen ? 2.5 : 2} />
-          <span className="text-[10px] font-medium">NEET AI</span>
+          <span className="text-[10px] font-medium">Neet Breakers AI</span>
         </button>
       </nav>
 
@@ -98,7 +98,7 @@ export default function Navigation({ isAdmin }: { isAdmin: boolean }) {
             }`}
           >
             <Bot className="w-5 h-5" strokeWidth={isChatOpen ? 2.5 : 2} />
-            <span className="font-medium">NEET AI</span>
+            <span className="font-medium">Neet Breakers AI</span>
             {isChatOpen && (
               <motion.div
                 layoutId="desktop-indicator-ai"

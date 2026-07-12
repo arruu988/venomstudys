@@ -136,9 +136,9 @@ export default function Admin() {
         broadcastMessage, 
         broadcastActive 
       }, { merge: true });
-      toast.success("Broadcast settings updated!");
+      toast.success("Announcement settings updated!");
     } catch (error: any) {
-      toast.error("Error updating broadcast: " + error.message);
+      toast.error("Error updating announcement: " + error.message);
     }
   };
 
@@ -199,9 +199,9 @@ export default function Admin() {
         {/* Left Column: Forms */}
         <div className="space-y-8 lg:col-span-1">
           
-          {/* Broadcast Message */}
+          {/* Announcement Message */}
           <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Broadcast Message</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Announcement Message</h2>
             <form onSubmit={handleUpdateBroadcast} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Message</label>
@@ -209,7 +209,7 @@ export default function Admin() {
                   value={broadcastMessage}
                   onChange={e => setBroadcastMessage(e.target.value)}
                   className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-none h-24"
-                  placeholder="Enter a message for all users..."
+                  placeholder="Enter an announcement for the dashboard..."
                 />
               </div>
               <div className="flex items-center justify-between">
@@ -229,7 +229,7 @@ export default function Admin() {
                 className="w-full py-3 bg-indigo-600 text-white rounded-xl font-semibold shadow-lg hover:bg-indigo-700 transition-colors flex justify-center items-center gap-2"
               >
                 <Send className="w-5 h-5" />
-                Update Broadcast
+                Update Announcement
               </button>
             </form>
           </div>

@@ -11,7 +11,7 @@ interface Message {
 export default function AIChat() {
   const { isChatOpen, closeChat } = useAIChatStore();
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', content: 'Hello! I am NEET AI, your NEET preparation expert. How can I help you today?' }
+    { role: 'assistant', content: 'Hello! I am Neet Breakers AI, your NEET preparation expert. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +84,7 @@ export default function AIChat() {
                   <Bot className="w-7 h-7" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg md:text-xl">NEET AI</h3>
+                  <h3 className="font-bold text-lg md:text-xl">Neet Breakers AI</h3>
                   <p className="text-sm text-blue-100">NEET Expert</p>
                 </div>
               </div>

@@ -20,8 +20,6 @@ export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLocked, setIsLocked] = useState(false);
-  const [broadcastMessage, setBroadcastMessage] = useState('');
-  const [broadcastActive, setBroadcastActive] = useState(false);
   const { isDark, toggleTheme } = useThemeStore();
 
   useEffect(() => {
@@ -34,8 +32,6 @@ export default function App() {
       if (doc.exists()) {
         const data = doc.data();
         setIsLocked(data.isLocked === true);
-        setBroadcastMessage(data.broadcastMessage || '');
-        setBroadcastActive(data.broadcastActive === true);
       }
     }, (error) => {
       console.error("Error fetching settings:", error);
@@ -84,20 +80,6 @@ export default function App() {
       {user && <Navigation isAdmin={isAdmin} />}
       
       <div className={user ? "pb-24 pt-4 md:pt-0 md:pl-64 md:pb-0 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col" : "min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors flex flex-col"}>
-        <AnimatePresence>
-          {user && broadcastActive && broadcastMessage && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="bg-blue-600 text-white px-4 py-3 shadow-md z-40 relative flex items-center justify-center gap-3"
-            >
-              <Bell className="w-5 h-5 shrink-0" />
-              <p className="text-sm md:text-base font-medium">{broadcastMessage}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        
         <div className="flex-1">
           <Routes>
             <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
