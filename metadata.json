@@ -1,0 +1,6 @@
+{
+  "name": "NEET Breakers Archive",
+  "description": "A comprehensive test paper archive and AI tutor platform for NEET preparation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
